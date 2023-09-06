@@ -179,7 +179,7 @@ class PLModel(LightningModule):
         output = self._evaluation_step(batch, phase="val")
         self.evaluation_output.append(output)
 
-    def on_validation_epoch_end(self, outputs: List[Dict[str, Tensor]]) -> None:
+    def on_validation_epoch_end(self) -> None:
         outputs = self.evaluation_output
         self._end_process(outputs, "val")
 
@@ -187,7 +187,7 @@ class PLModel(LightningModule):
         output = self._evaluation_step(batch, phase="test")
         self.evaluation_output.append(output) 
 
-    def on_test_epoch_end(self, outputs: List[Dict[str, Tensor]]) -> None:
+    def on_test_epoch_end(self) -> None:
         outputs = self.evaluation_output
         self._end_process(outputs, "test")
 

@@ -54,7 +54,7 @@ def main(cfg: DictConfig, pl_model: type) -> Path:
         return Trainer(
             # env
             default_root_dir=str(out_dir),
-            accelerator="gpu",
+            accelerator="ddp",
             precision=16 if cfg.training.use_amp else 32,
             # training
             fast_dev_run=cfg.training.debug,  # run only 1 train batch and 1 val batch

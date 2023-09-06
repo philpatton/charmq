@@ -32,7 +32,7 @@ class HappyWhaleDataset(Dataset):
                 df_fb_charm = pd.read_csv(str(root / "fullbody_train_charm.csv")).iloc[
                     df.index
                 ]
-                df_bbox_yolo = pd.read_csv(str(root / "train_bbox.csv")).iloc[df.index]
+                df_bbox_yolo = pd.read_csv(str(root / "yolov5_train.csv")).iloc[df.index]
                 df_bbox_detic = pd.read_csv(str(root / "train2.csv")).iloc[df.index]
                 df_bbox_backfin = pd.read_csv(str(root / "train_backfin.csv")).iloc[
                     df.index
@@ -44,7 +44,7 @@ class HappyWhaleDataset(Dataset):
                 df = pd.read_csv(str(root / "pseudo_labels" / pseudo_label_filename))
                 df_fb = pd.read_csv(str(root / "fullbody_test.csv"))
                 df_fb_charm = pd.read_csv(str(root / "fullbody_test_charm.csv"))
-                df_bbox_yolo = pd.read_csv(str(root / "test_bbox.csv"))
+                df_bbox_yolo = pd.read_csv(str(root / "yolov5_test.csv"))
                 df_bbox_detic = pd.read_csv(str(root / "test2.csv"))
                 df_bbox_backfin = pd.read_csv(str(root / "test_backfin.csv"))
                 df_bbox_backfin_charm = pd.read_csv(
@@ -146,7 +146,7 @@ class HappyWhaleDataset(Dataset):
                 .map(eval)
                 .map(lambda x: 0 if len(x) == 0 else x[0])
             )
-            df_bbox_yolo = pd.read_csv(str(root / "train_bbox.csv"))
+            df_bbox_yolo = pd.read_csv(str(root / "yolov5_train.csv"))
             df["bbox_yolo"] = df_bbox_yolo["bbox"].map(eval)
             df["conf_yolo"] = (
                 df_bbox_yolo["conf"].map(eval).map(lambda x: 0 if len(x) == 0 else x[0])
@@ -209,7 +209,7 @@ class HappyWhaleDataset(Dataset):
                 .map(eval)
                 .map(lambda x: 0 if len(x) == 0 else x[0])
             )
-            df_bbox_yolo = pd.read_csv(str(root / "test_bbox.csv"))
+            df_bbox_yolo = pd.read_csv(str(root / "yolov5_test.csv"))
             df["bbox_yolo"] = df_bbox_yolo["bbox"].map(eval)
             df["conf_yolo"] = (
                 df_bbox_yolo["conf"].map(eval).map(lambda x: 0 if len(x) == 0 else x[0])

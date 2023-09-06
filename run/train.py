@@ -58,7 +58,7 @@ def main(cfg: DictConfig, pl_model: type) -> Path:
             precision=16 if cfg.training.use_amp else 32,
             # training
             fast_dev_run=cfg.training.debug,  # run only 1 train batch and 1 val batch
-            weights_summary="top" if cfg.training.debug else None,
+            # weights_summary="top" if cfg.training.debug else None,
             max_epochs=cfg.training.epoch,
             gradient_clip_val=cfg.training.gradient_clip_val,
             accumulate_grad_batches=cfg.training.accumulate_grad_batches,

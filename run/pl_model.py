@@ -69,6 +69,8 @@ class PLModel(LightningModule):
             )
             logger.info(f"{phase}: {len(self.datasets[phase])}")
 
+        self.evaluation_output = []
+
     def on_train_epoch_start(self):
         pass
 
@@ -174,15 +176,19 @@ class PLModel(LightningModule):
         return output
 
     def validation_step(self, batch: Dict[str, Tensor], batch_idx: int):
-        return self._evaluation_step(batch, phase="val")
+        output = self._evaluation_step(batch, phase="val")
+        self.evaluation_output.append(output)
 
-    def validation_epoch_end(self, outputs: List[Dict[str, Tensor]]) -> None:
+    def on_validation_epoch_end(self, outputs: List[Dict[str, Tensor]]) -> None:
+        outputs = self.evaluation_output
         self._end_process(outputs, "val")
 
     def test_step(self, batch: Dict[str, Tensor], batch_idx: int) -> Dict[str, Tensor]:
-        return self._evaluation_step(batch, phase="test")
+        output = self._evaluation_step(batch, phase="test")
+        self.evaluation_output.append(output) 
 
-    def test_epoch_end(self, outputs: List[Dict[str, Tensor]]) -> None:
+    def on_test_epoch_end(self, outputs: List[Dict[str, Tensor]]) -> None:
+        outputs = self.evaluation_output
         self._end_process(outputs, "test")
 
     def configure_optimizers(self):
